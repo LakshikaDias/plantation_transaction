@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "118310918252",
+    "firebase_url": "https://plantation-items.firebaseio.com",
+    "project_id": "plantation-items",
+    "storage_bucket": "plantation-items.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118310918252:android:af50b395489ad618662049",
+        "android_client_info": {
+          "package_name": "com.example.plantationtransaction"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "118310918252-70414h3qoiiuhqf12ubqqu73sh9pg1c2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3Kf8MqowVE25wjrWhOUE6wO9FRRJ4Mb8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118310918252-70414h3qoiiuhqf12ubqqu73sh9pg1c2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
