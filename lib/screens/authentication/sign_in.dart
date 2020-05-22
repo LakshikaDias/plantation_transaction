@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plantationtransaction/services/auth.dart';
 import 'package:plantationtransaction/shared/constants.dart';
-
+import 'package:plantationtransaction/shared/loading.dart';
 class SignIn extends StatefulWidget {
 
   final Function toggleView;
@@ -17,6 +17,7 @@ class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String error = '';
+  bool loading = false;
 
   // text field state
   String email = '';
@@ -28,7 +29,8 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     
 
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
+      backgroundColor: Colors.blue[50],
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         child: Form(
@@ -54,16 +56,18 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                  color: Colors.pink[400],
+                  color: Colors.blue,
                   child: Text(
                     'Sign In',
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () async {
                     if(_formKey.currentState.validate()){
+                      setState(() => loading = true);
                       dynamic result = await _auth.signInWithEmailAndPassword(email, password);
                       if(result == null) {
                         setState(() {
+                          loading = false;
                           error = 'Could not sign in with those credentials';
                         });
                       }

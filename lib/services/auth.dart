@@ -1,5 +1,6 @@
 import'package:firebase_auth/firebase_auth.dart';
 import 'package:plantationtransaction/models/user.dart';
+import 'package:plantationtransaction/services/database.dart';
 
 class AuthService {
 
@@ -40,10 +41,15 @@ class AuthService {
     }
   }
     //sign up with email and password
-  Future signUpWithEmailAndPassword(String email, String password) async {
+
+  Future signUpWithEmailAndPassword( String name, String address, String id, String phoneNo, String category,String email, String password) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
+
+      //create a new document for the with the uid
+      await DatabaseService(uid: user.uid).updateUserData(name, address, id , phoneNo , category , email);
+
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());

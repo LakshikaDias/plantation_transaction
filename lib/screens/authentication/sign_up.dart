@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plantationtransaction/services/auth.dart';
 import 'package:plantationtransaction/shared/constants.dart';
+import 'package:plantationtransaction/shared/loading.dart';
 
 
 class SignUp extends StatefulWidget {
@@ -17,21 +18,62 @@ class _SignUpState extends State<SignUp> {
   String error = '';
 
   // text field state
+  String name = '';
+  String address = '';
+  String id = '';
+  String phoneNo = '';
+  String category = '';
   String email = '';
   String password = '';
-
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
 
 
 
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
+      backgroundColor: Colors.blue[50],
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         child: Form(
           key: _formKey,
           child: Column(
             children: <Widget>[
+              SizedBox(height: 20.0),
+              TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'Name'),
+                onChanged: (val) {
+                  setState(() => name = val);
+                },
+              ),
+              SizedBox(height: 20.0),
+              TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'Address'),
+                onChanged: (val) {
+                  setState(() => address = val);
+                },
+              ),
+              SizedBox(height: 20.0),
+              TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'NIC Number'),
+                onChanged: (val) {
+                  setState(() => id = val);
+                },
+              ),
+              SizedBox(height: 20.0),
+              TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'Telephone Number'),
+                onChanged: (val) {
+                  setState(() => phoneNo = val);
+                },
+              ),
+              SizedBox(height: 20.0),
+              TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'Customer or Seller'),
+                onChanged: (val) {
+                  setState(() => category = val);
+                },
+              ),
               SizedBox(height: 20.0),
               TextFormField(
                 decoration: textInputDecoration.copyWith(hintText: 'Email'),
@@ -51,16 +93,18 @@ class _SignUpState extends State<SignUp> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                  color: Colors.pink[400],
+                  color: Colors.blue,
                   child: Text(
                     'Sign Up',
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () async {
                     if(_formKey.currentState.validate()){
-                      dynamic result = await _auth.signUpWithEmailAndPassword(email, password);
+                      setState(() => loading = true);
+                      dynamic result = await _auth.signUpWithEmailAndPassword(name, address,id,phoneNo,category,email, password);
                       if(result == null) {
                         setState(() {
+                          loading = false;
                           error = 'Please supply a valid email';
                         });
                       }
