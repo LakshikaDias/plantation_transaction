@@ -20,7 +20,7 @@ class _SignUpState extends State<SignUp> {
   // text field state
   String name = '';
   String address = '';
-  String id = '';
+  String nic = '';
   String phoneNo = '';
   String category = '';
   String email = '';
@@ -37,92 +37,102 @@ class _SignUpState extends State<SignUp> {
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         child: Form(
           key: _formKey,
-          child: Column(
+          child: ListView(
             children: <Widget>[
-              SizedBox(height: 20.0),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Name'),
-                onChanged: (val) {
-                  setState(() => name = val);
-                },
-              ),
-              SizedBox(height: 20.0),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Address'),
-                onChanged: (val) {
-                  setState(() => address = val);
-                },
-              ),
-              SizedBox(height: 20.0),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'NIC Number'),
-                onChanged: (val) {
-                  setState(() => id = val);
-                },
-              ),
-              SizedBox(height: 20.0),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Telephone Number'),
-                onChanged: (val) {
-                  setState(() => phoneNo = val);
-                },
-              ),
-              SizedBox(height: 20.0),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Customer or Seller'),
-                onChanged: (val) {
-                  setState(() => category = val);
-                },
-              ),
-              SizedBox(height: 20.0),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Email'),
-                validator: (val) => val.isEmpty ? 'Enter an email' : null,
-                onChanged: (val) {
-                  setState(() => email = val);
-                },
-              ),
-              SizedBox(height: 20.0),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Password'),
-                obscureText: true,
-                validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
-                onChanged: (val) {
-                  setState(() => password = val);
-                },
-              ),
-              SizedBox(height: 20.0),
-              RaisedButton(
-                  color: Colors.blue,
-                  child: Text(
-                    'Sign Up',
-                    style: TextStyle(color: Colors.white),
+              Column(
+                children: <Widget>[
+                  SizedBox(height: 20.0),
+                  CircleAvatar(
+
+                    backgroundImage: AssetImage('assets/logo.jpg'),
                   ),
-                  onPressed: () async {
-                    if(_formKey.currentState.validate()){
-                      setState(() => loading = true);
-                      dynamic result = await _auth.signUpWithEmailAndPassword(name, address,id,phoneNo,category,email, password);
-                      if(result == null) {
-                        setState(() {
-                          loading = false;
-                          error = 'Please supply a valid email';
-                        });
+                  SizedBox(height: 20.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Name'),
+                    onChanged: (val) {
+                      setState(() => name = val);
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Address'),
+                    onChanged: (val) {
+                      setState(() => address = val);
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'NIC Number'),
+                    onChanged: (val) {
+                      setState(() => nic = val);
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Telephone Number'),
+                    onChanged: (val) {
+                      setState(() => phoneNo = val);
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Customer or Seller'),
+                    onChanged: (val) {
+                      setState(() => category = val);
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Email'),
+                    validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                    onChanged: (val) {
+                      setState(() => email = val);
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Password'),
+                    obscureText: true,
+                    validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                    onChanged: (val) {
+                      setState(() => password = val);
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  RaisedButton(
+                      color: Colors.blue,
+                      child: Text(
+                        'Sign Up',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () async {
+                        if(_formKey.currentState.validate()){
+                          setState(() => loading = true);
+                          dynamic result = await _auth.signUpWithEmailAndPassword(name, address,nic,phoneNo,category,email, password);
+                          if(result == null) {
+                            setState(() {
+                              loading = false;
+                              error = 'Please supply a valid email';
+                            });
+                          }
+                        }
                       }
-                    }
-                  }
+                  ),
+                  Center(
+                    child: FlatButton(
+                      child: Text('sigin',),
+                      onPressed: ()=> widget.toggleView(),
+                    ),
+                  ),
+                  SizedBox(height: 12.0),
+                  Text(
+                    error,
+                    style: TextStyle(color: Colors.red, fontSize: 14.0),
+                  )
+                ],
               ),
-              Center(
-                child: FlatButton(
-                  child: Text('sigin',),
-                  onPressed: ()=> widget.toggleView(),
-                ),
-              ),
-              SizedBox(height: 12.0),
-              Text(
-                error,
-                style: TextStyle(color: Colors.red, fontSize: 14.0),
-              )
             ],
+
           ),
         ),
       ),

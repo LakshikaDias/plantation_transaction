@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:plantationtransaction/models/seller.dart';
 
 
 class DatabaseService {
@@ -7,19 +8,57 @@ class DatabaseService {
   DatabaseService({ this.uid });
 
   // collection reference
-  final CollectionReference userCollection = Firestore.instance.collection('users');
+  final CollectionReference customerCollection = Firestore.instance.collection('customers');
+  final CollectionReference sellerCollection = Firestore.instance.collection('sellers');
 
-  Future updateUserData( String name, String address, String id, String phoneNo, String category, String email) async {
-    return await userCollection.document(uid).setData({
+
+  // send data to customer collection
+  Future updateCustomerData( String name, String address, String phoneNo, String email, String customerNIC) async {
+    return await customerCollection.document(uid).setData({
       'name': name,
       'address' : address,
-      'id' : id,
+      'customerId' : uid,
       'phoneNo' : phoneNo,
-      'category' : category,
+      'NIC': customerNIC,
       'email' : email,
 
 
     });
   }
+
+
+  // send data to seller collection
+  Future updateSellerData( String name, String address, String phoneNo, String email,  String sellerNIC) async {
+    return await sellerCollection.document(uid).setData({
+      'name': name,
+      'address' : address,
+      'sellerid' : uid,
+      'phoneNo' : phoneNo,
+      'NIC': sellerNIC,
+      'email' : email,
+
+
+    });
+  }
+
+
+  //seller list from snapshot
+  List<Seller> _sellerListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.documents.map((doc){
+      return Seller(
+        name: doc.data['name'] ?? 'shopName',
+        address: doc.data['address'] ?? 'address',
+
+
+      );
+    }).toList();
+  }
+
+  // get seller Stream
+Stream<List<Seller>> get sellers {
+    return sellerCollection.snapshots()
+      .map(_sellerListFromSnapshot);
+
+}
 
 }
