@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plantationtransaction/screens/home/home.dart';
+import 'package:plantationtransaction/screens/orders/cart.dart';
+
 class ProductDetails extends StatefulWidget {
   final prodDetailName;
   final prodDetailPicture;
@@ -31,7 +33,10 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
           IconButton(
             icon:Icon(Icons.shopping_cart),
-            onPressed: (){},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>Cart() ));
+            },
           ),
           IconButton(
             icon:Icon(Icons.home),
@@ -132,7 +137,112 @@ class _ProductDetailsState extends State<ProductDetails> {
                 child: Text('New'),),
             ],
           ),
+          Divider(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Similar Product'),
+          ),
+          // Similar Products Section ======================================================
+          Container(
+            height: 360.0,
+            child: SimilarProducts(),
+          )
         ],
+      ),
+    );
+  }
+}
+
+class SimilarProducts extends StatefulWidget {
+
+  @override
+  _SimilarProductsState createState() => _SimilarProductsState();
+}
+
+class _SimilarProductsState extends State<SimilarProducts> {
+
+  var productList = [
+    {
+      'name':'Banana',
+      'picture':'assets/shopHere.jpg',
+      'quantity': '1kg',
+      'price':100,
+    },
+
+    {
+      'name':'Mango',
+      'picture':'assets/logo.jpg',
+      'quantity': '500g',
+      'price':70,
+    },
+    {
+      'name':'Tomato',
+      'picture':'assets/logo1.png',
+      'quantity': '1kg',
+      'price':60,
+    },
+
+
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+        itemCount: productList.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2),
+        itemBuilder: (BuildContext context, int index){
+          return SimilarSingleProduct(
+            prodName: productList[index]['name'],
+            prodPicture: productList[index]['picture'],
+            prodQuantity: productList[index]['quantity'],
+            prodPrice: productList[index]['price'],
+          );
+        });
+  }
+}
+
+class SimilarSingleProduct extends StatelessWidget {
+  final prodName;
+  final prodPicture;
+  final prodQuantity;
+  final prodPrice;
+
+  SimilarSingleProduct({
+    this.prodName,
+    this.prodPicture,
+    this.prodQuantity,
+    this.prodPrice,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Hero(
+        tag: prodName,
+        child: Material(
+          child: InkWell(
+            onTap: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>ProductDetails(
+                    prodDetailName: prodName,
+                    prodDetailPicture: prodPicture,
+                    prodDetailQuantity: prodQuantity,
+                    prodDetailPrice: prodPrice,
+                  ) ));
+            },
+            child: GridTile(
+              footer: Container(
+                color: Colors.white70,
+                child: ListTile(
+                  leading: Text(prodName, style: TextStyle(fontWeight: FontWeight.bold),),
+                  title: Text('\$$prodPrice', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red)),
+                  subtitle: Text(prodQuantity, style: TextStyle(color: Colors.green),),
+                ),
+              ),
+              child: Image.asset(prodPicture, fit: BoxFit.cover,),
+            ),
+          ),
+        ),
       ),
     );
   }

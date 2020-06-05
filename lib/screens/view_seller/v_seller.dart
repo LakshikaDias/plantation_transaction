@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:plantationtransaction/screens/home/home.dart';
+import 'package:plantationtransaction/screens/orders/cart.dart';
 import 'package:plantationtransaction/screens/view_seller/categories.dart';
 import 'package:plantationtransaction/screens/view_seller/products.dart';
 class SellerView extends StatefulWidget {
@@ -23,7 +24,10 @@ class _SellerViewState extends State<SellerView> {
           ),
           IconButton(
             icon:Icon(Icons.shopping_cart),
-            onPressed: (){},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>Cart() ));
+            },
           ),
           IconButton(
             icon:Icon(Icons.home),
@@ -49,7 +53,7 @@ class _SellerViewState extends State<SellerView> {
               ),
             ),
 
-            // body of the drawer.....................................................................................................
+            // body of the drawer=======================================================================================================================
             InkWell(
               onTap: (){
                 Navigator.push(context,
@@ -68,7 +72,10 @@ class _SellerViewState extends State<SellerView> {
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context)=>Cart() ));
+              },
               child: ListTile(
                 title: Text('Orders'),
                 leading: Icon(Icons.shopping_basket),

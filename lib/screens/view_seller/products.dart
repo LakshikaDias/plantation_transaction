@@ -19,6 +19,30 @@ class _ProductsState extends State<Products> {
       'quantity': '2kg',
       'price':50,
     },
+    {
+      'name':'Mango',
+      'picture':'assets/logo.jpg',
+      'quantity': '500g',
+      'price':70,
+    },
+    {
+      'name':'Tomato',
+      'picture':'assets/logo1.png',
+      'quantity': '1kg',
+      'price':60,
+    },
+    {
+      'name':'Pineapple',
+      'picture':'assets/customer1.jpg',
+      'quantity': '2kg',
+      'price':40,
+    },
+    {
+      'name':'Stoberrry',
+      'picture':'assets/shop1.jpg',
+      'quantity': '2kg',
+      'price':150,
+    },
 
   ];
   @override
