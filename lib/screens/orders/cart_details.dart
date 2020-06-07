@@ -28,6 +28,7 @@ class _CartDetailsState extends State<CartDetails> {
           ),
         ],
       ),
+      body: CartProducts(),
       bottomNavigationBar: Container(
         color: Colors.white,
         child: Row(
@@ -51,3 +52,89 @@ class _CartDetailsState extends State<CartDetails> {
     );
   }
 }
+// each products of the cart=================================================================================================
+
+class CartProducts extends StatefulWidget {
+  @override
+  _CartProductsState createState() => _CartProductsState();
+}
+
+class _CartProductsState extends State<CartProducts> {
+  var ProductInTheCart=[
+    {
+      'name': 'Banana',
+      'picture':'assets/shopHere.jpg',
+      'price':100,
+      'quantity':'1kg',
+    },
+    {
+      'name': 'Apple',
+      'picture':'assets/shop1.jpg',
+      'price':50,
+      'quantity':'2kg',
+    },
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: ProductInTheCart.length,
+        itemBuilder: (context,index){
+          return SingleCartProduct(
+            CartProdName: ProductInTheCart[index]['name'],
+            CartProdPicture: ProductInTheCart[index]['picture'],
+            CartProdPrice: ProductInTheCart[index]['price'],
+            CartProdQuantity: ProductInTheCart[index]['quantity'],
+          );
+        }
+    );
+  }
+}
+
+class SingleCartProduct extends StatelessWidget {
+  final CartProdName;
+  final CartProdPicture;
+  final CartProdPrice;
+  final CartProdQuantity;
+
+  SingleCartProduct({
+    this.CartProdName,
+    this.CartProdPicture,
+    this.CartProdPrice,
+    this.CartProdQuantity,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: Image.asset(CartProdPicture, width:80.0),
+        title: Text(CartProdName),
+        subtitle: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Quantity:'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(CartProdQuantity),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Price:'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('\$$CartProdPrice'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
