@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:plantationtransaction/screens/home/home.dart';
 import 'package:plantationtransaction/screens/orders/cart.dart';
+import 'package:plantationtransaction/screens/seller_pro/seller_pro.dart';
 import 'package:plantationtransaction/screens/view_seller/categories.dart';
 import 'package:plantationtransaction/screens/view_seller/products.dart';
 class SellerView extends StatefulWidget {
@@ -47,13 +48,20 @@ class _SellerViewState extends State<SellerView> {
               accountName:Text('User name') ,
               accountEmail:Text('User email') ,
               currentAccountPicture: GestureDetector(
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('assets/customer1.jpg'),
+                //============================================= goto seller profile==========================
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context,
+                    MaterialPageRoute(builder: (context)=>SellerProfile()));
+                  },
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage('assets/customer1.jpg',),
+                  ),
                 ),
               ),
             ),
 
-            // body of the drawer=======================================================================================================================
+            // =======================================================body of the drawer======================
             InkWell(
               onTap: (){
                 Navigator.push(context,
