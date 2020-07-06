@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:plantationtransaction/models/seller.dart';
+import 'package:plantationtransaction/models/product.dart';
+import 'package:uuid/uuid.dart';
 
 
 class DatabaseService {
@@ -10,6 +12,11 @@ class DatabaseService {
   // collection reference
   final CollectionReference customerCollection = Firestore.instance.collection('customers');
   final CollectionReference sellerCollection = Firestore.instance.collection('sellers');
+
+
+//==============================================================================
+  final  CollectionReference productCollection = Firestore.instance.collection('products');
+//==============================================================================
 
 
   // send data to customer collection
@@ -60,5 +67,36 @@ Stream<List<Seller>> get sellers {
       .map(_sellerListFromSnapshot);
 
 }
-
+//==============================================================================
+// send data to product collection
+Future updateProductData(String pName)async{
+    var id = Uuid();
+    String productId = id.v1();
+    return await productCollection.document(productId).setData({
+      'pid':productId,
+      'productName':pName,
+      //'productCategory':pCategory,
+      //'productQuantity':pQuantity,
+      //'productPrice':pPrice,
+      //'pDiscription': pDiscription,
+    });
 }
+
+//==============================================================================
+}
+
+//............................test one..........................................
+/*class ProductService {
+  Firestore _firestore = Firestore.instance;
+  String ref = 'products';
+
+  void uploadProduct(Map<String, dynamic> data) {
+    var id = Uuid();
+    String productId = id.v1();
+    data["id"] = productId;
+    _firestore.collection(ref).document(productId).setData(data);
+  }
+}*/
+
+
+//.......................end of it..............................................

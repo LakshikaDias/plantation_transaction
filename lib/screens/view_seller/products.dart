@@ -8,32 +8,32 @@ class Products extends StatefulWidget {
 class _ProductsState extends State<Products> {
   var productList = [
     {
-      'name':'Banana',
-      'picture':'assets/shopHere.jpg',
+      'name':'Corn',
+      'picture':'assets/corn.png',
       'quantity': '1kg',
       'price':100,
     },
     {
       'name':'Apple',
-      'picture':'assets/shop1.jpg',
+      'picture':'assets/apple.png',
       'quantity': '2kg',
       'price':50,
     },
     {
-      'name':'Mango',
-      'picture':'assets/logo.jpg',
+      'name':'Grapes',
+      'picture':'assets/grapes.png',
       'quantity': '500g',
       'price':70,
     },
     {
-      'name':'Tomato',
-      'picture':'assets/logo1.png',
+      'name':'Orange',
+      'picture':'assets/orange.png',
       'quantity': '1kg',
       'price':60,
     },
     {
-      'name':'Pineapple',
-      'picture':'assets/customer1.jpg',
+      'name':'Carrots',
+      'picture':'assets/carrot.png',
       'quantity': '2kg',
       'price':40,
     },

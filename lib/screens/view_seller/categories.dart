@@ -9,14 +9,14 @@ class CategoryList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: <Widget>[
           Category(
-            imageLocation:'assets/customer1.jpg' ,
+            imageLocation:'assets/vegitables.png' ,
             imageCaption: 'vegitables',
           ),
           Category(
-            imageLocation:'assets/customer1.jpg' ,
+            imageLocation:'assets/fruits.png' ,
             imageCaption: 'fruits',
           ),
-          Category(
+          /*Category(
             imageLocation:'assets/customer1.jpg' ,
             imageCaption: 'others',
           ),
@@ -27,7 +27,7 @@ class CategoryList extends StatelessWidget {
           Category(
             imageLocation:'assets/customer1.jpg' ,
             imageCaption: 'others',
-          ),
+          ),*/
 
         ],
       ),

@@ -28,9 +28,6 @@ class _SignUpState extends State<SignUp> {
   bool loading = false;
   @override
   Widget build(BuildContext context) {
-
-
-
     return loading ? Loading() : Scaffold(
       backgroundColor: Colors.blue[50],
       body: Container(
