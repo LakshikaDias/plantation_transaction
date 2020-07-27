@@ -22,14 +22,16 @@ class _SignUpState extends State<SignUp> {
   String address = '';
   String nic = '';
   String phoneNo = '';
+ // var dropDown = ['customer','seller'];
   String category = '';
+ // String dropDownValue='customer';
   String email = '';
   String password = '';
   bool loading = false;
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-      backgroundColor: Colors.blue[50],
+      backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         child: Form(
@@ -39,13 +41,16 @@ class _SignUpState extends State<SignUp> {
               Column(
                 children: <Widget>[
                   SizedBox(height: 20.0),
+                  Text('SignUp',style: TextStyle(color: Colors.blue,fontSize: 30.0,fontWeight: FontWeight.bold),),
+                  SizedBox(height: 20.0),
                   CircleAvatar(
-
+                    radius: 50.0,
                     backgroundImage: AssetImage('assets/logo.jpg'),
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Name'),
+                    validator: (val) => val.isEmpty ? 'Name is Required' : null,
                     onChanged: (val) {
                       setState(() => name = val);
                     },
@@ -53,6 +58,7 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: 20.0),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Address'),
+                    validator: (val) => val.isEmpty ? 'Address is Required' : null,
                     onChanged: (val) {
                       setState(() => address = val);
                     },
@@ -60,6 +66,27 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: 20.0),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'NIC Number'),
+                    //-----------------------------------------
+                    validator: (val){
+                      if(val.isEmpty){
+                        return 'Email is Required';
+                      }
+
+                      if(!RegExp(r'^([0-9]{9}[x|X|v|V]|[0-9]{12})$').hasMatch(val)){
+                        return 'Please enter valid NIC Number';
+                      }
+                      return null;
+                    },
+                    //----------------------------------------
+                    /*validator: (val){
+                      if(val.isEmpty){
+                        return 'Email is Required';
+                      }
+                      if(val.length < 10){
+                        return 'Please enter valid NIC Number';
+                      }
+                      return null;
+                    },*/
                     onChanged: (val) {
                       setState(() => nic = val);
                     },
@@ -67,11 +94,42 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: 20.0),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Telephone Number'),
+                    //maxLength: 10,
+                    //validator: (val) => val.isEmpty ? 'Telephone Number is Required' : null,
+                    keyboardType: TextInputType.phone,
+                    //-------------------------------------------------
+                    validator: (val){
+                      if(val.isEmpty){
+                        return 'Telephone Number is Required';
+                      }
+
+                      if(!RegExp(r'^(?:[+0]9)?[0-9]{10}$').hasMatch(val)){
+                        return 'Please enter valid Telephone Number';
+                      }
+                      return null;
+                    },
+                    //----------------------------------------------------
                     onChanged: (val) {
                       setState(() => phoneNo = val);
                     },
                   ),
                   SizedBox(height: 20.0),
+                  //---------------------------------
+                  /*DropdownButton<String>(
+                    items: dropDown.map((String dropDownStringItem){
+                      return DropdownMenuItem<String>(
+                        value: dropDownStringItem,
+                        child: Text(dropDownStringItem),
+                      );
+                    }).toList(),
+                    onChanged: ( String val) {
+                      setState(() {
+                        this.category = val;
+                      });
+                    },
+                    value: category,
+                  ),*/
+                  //---------------------------------
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Customer or Seller'),
                     onChanged: (val) {
@@ -81,19 +139,46 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: 20.0),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Email'),
-                    validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                   //-------------------------------------------------------------------
+                   validator: (val){
+                      if(val.isEmpty){
+                        return 'Email is Required';
+                      }
+
+                      if(!RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$').hasMatch(val)){
+                        return 'Please enter valid email';
+                      }
+                      return null;
+                   },
+//--------------------------------------------------------------
+                   // validator: (val) => val.isEmpty ? 'Enter an email' : null,
                     onChanged: (val) {
                       setState(() => email = val);
                     },
+
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Password'),
                     obscureText: true,
-                    validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                    validator: (val){
+                      if(val.isEmpty){
+                        return 'Password is Required';
+                      }
+                      if(val.length < 6){
+                        return 'Enter a password 6+ chars long';
+                      }
+                      return null;
+                    },
+                    //validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
                     onChanged: (val) {
                       setState(() => password = val);
                     },
+                  ),
+                  SizedBox(height:10.0),
+                  FlatButton(
+                    child: Text('Forgot your password?',style: TextStyle(color: Colors.red[300]),textAlign: TextAlign.right,),
+                    onPressed: (){},
                   ),
                   SizedBox(height: 20.0),
                   RaisedButton(
@@ -116,9 +201,14 @@ class _SignUpState extends State<SignUp> {
                       }
                   ),
                   Center(
-                    child: FlatButton(
-                      child: Text('sigin',),
-                      onPressed: ()=> widget.toggleView(),
+                    child: Row(
+                      children: <Widget>[
+                        Text("Do you have an account yet?",style: TextStyle(color: Colors.grey),),
+                        FlatButton(
+                          child: Text('SignIn',style: TextStyle(color: Colors.blue),),
+                          onPressed: ()=> widget.toggleView(),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 12.0),

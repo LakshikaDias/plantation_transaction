@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:plantationtransaction/screens/authentication/sign_in.dart';
+import 'package:plantationtransaction/screens/authentication/sign_up.dart';
 class Choose extends StatefulWidget {
   Choose({Key key, this.title}) : super(key: key);
   final String title;
@@ -18,7 +20,10 @@ class _ChooseState extends State<Choose> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){},
+        onPressed: (){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context)=>SignUp() ));
+        },
         child: Text(
           'Sign In',
           textAlign: TextAlign.center,
@@ -33,7 +38,10 @@ class _ChooseState extends State<Choose> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){},
+        onPressed: (){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context)=>SignIn() ));
+        },
         child: Text(
           'Log In',
           textAlign: TextAlign.center,
@@ -41,7 +49,7 @@ class _ChooseState extends State<Choose> {
         ),
       ),
     );
-    final guestButton = Material(
+    /*final guestButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
       color: Colors.blue,
@@ -56,7 +64,7 @@ class _ChooseState extends State<Choose> {
           style: style.copyWith(color: Colors.white,fontWeight: FontWeight.bold),
         ),
       ),
-    );
+    );*/
     return Scaffold(
       body: Center(
         child: Container(
@@ -75,9 +83,9 @@ class _ChooseState extends State<Choose> {
                 signinButton,
                 SizedBox(height: 25.0,),
                 loginButton,
-                SizedBox(height: 25.0,),
-                guestButton,
-                SizedBox(height: 15.0,),
+                //SizedBox(height: 25.0,),
+                //guestButton,
+                //SizedBox(height: 15.0,),
               ],
             ),
           ),

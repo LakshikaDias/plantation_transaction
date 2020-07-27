@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.notifications),
+              icon: Icon(Icons.person),
               onPressed: () async{
                 await _auth.signOut();
               },

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plantationtransaction/screens/home/home.dart';
 import 'package:plantationtransaction/services/product.dart';
 import 'package:plantationtransaction/screens/seller_pro/seller_pro_manage.dart';
-import 'package:plantationtransaction/screens/seller_pro/seller_pro_dashbourd.dart';
+import 'package:plantationtransaction/screens/seller_pro/seller_pro_products.dart';
 
 class SellerProfile extends StatefulWidget {
   @override
@@ -31,7 +31,7 @@ class _SellerProfileState extends State<SellerProfile> {
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(
-                  text: 'Dashboard',
+                  text: 'Products',
                 ),
                 Tab(
                   text: 'Manage',
@@ -42,7 +42,7 @@ class _SellerProfileState extends State<SellerProfile> {
           ),
           body: TabBarView(
             children: <Widget>[
-              Dashboard(),
+              SellerProducts(),
               Manage()
             ],
           )
