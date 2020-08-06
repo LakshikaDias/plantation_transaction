@@ -23,13 +23,13 @@ class _SellerViewState extends State<SellerView> {
             icon:Icon(Icons.search,),
             onPressed: (){},
           ),
-          IconButton(
+          /*IconButton(
             icon:Icon(Icons.shopping_cart),
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context)=>Cart() ));
             },
-          ),
+          ),*/
           IconButton(
             icon:Icon(Icons.home),
             onPressed: () {
@@ -40,7 +40,7 @@ class _SellerViewState extends State<SellerView> {
         ],
       ),
 
-      drawer: Drawer(
+      /*drawer: Drawer(
         child: ListView(
           children: <Widget>[
             //   header
@@ -99,7 +99,7 @@ class _SellerViewState extends State<SellerView> {
             ),
           ],
         ),
-      ),
+      ),*/
       body:ListView(
         children: <Widget>[
           // shop profile image

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:plantationtransaction/screens/home/seller_tile.dart';
 
 
-class RequestSellers extends StatefulWidget {
+/*class RequestSellers extends StatefulWidget {
   @override
   _RequestSellersState createState() => _RequestSellersState();
 }
@@ -28,7 +28,7 @@ class _RequestSellersState extends State<RequestSellers> {
 
     );
   }
-}
+}*/
 
 
 
