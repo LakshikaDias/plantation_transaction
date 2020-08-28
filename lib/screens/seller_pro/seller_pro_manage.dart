@@ -60,6 +60,7 @@ class _ManageState extends State<Manage> {
                         child: OutlineButton(
                           borderSide: BorderSide(color: Colors.grey.withOpacity(0.5), width:2.5 ),
                           onPressed: (){
+                            // take1 images from gallery
                             _selectImage(ImagePicker.pickImage(source: ImageSource.gallery),1);
                           },
                           child: _displayChild1()
@@ -72,6 +73,7 @@ class _ManageState extends State<Manage> {
                         child: OutlineButton(
                           borderSide: BorderSide(color: Colors.grey.withOpacity(0.5), width:2.5 ),
                           onPressed: (){
+                            // take2 images from gallery
                             _selectImage(ImagePicker.pickImage(source: ImageSource.gallery),2);
                           },
                             child: _displayChild2()
@@ -84,6 +86,7 @@ class _ManageState extends State<Manage> {
                         child: OutlineButton(
                           borderSide: BorderSide(color: Colors.grey.withOpacity(0.5), width:2.5 ),
                           onPressed: (){
+                            // take3 images from gallery
                             _selectImage(ImagePicker.pickImage(source: ImageSource.gallery),3);
                           },
                             child: _displayChild3()
@@ -105,11 +108,12 @@ class _ManageState extends State<Manage> {
               child: TextFormField(
                 decoration:
                 textInputDecoration.copyWith(hintText: 'product Name'),
-                //==========================================================================
+
+                validator: (val) => val.isEmpty ? 'Name is Required' : null,
                 onChanged: (val) {
                   setState(() => pName = val);
                 },
-                //=============================================================================
+
               ),
             ),
             Padding(
@@ -117,6 +121,7 @@ class _ManageState extends State<Manage> {
               child: TextFormField(
                 decoration:
                 textInputDecoration.copyWith(hintText: 'product Quantity'),
+                validator: (val) => val.isEmpty ? 'Quantity is Required' : null,
                 onChanged: (val) {
                   setState(() => pQuantity = val);
                 },
@@ -127,6 +132,7 @@ class _ManageState extends State<Manage> {
               child: TextFormField(
                 decoration:
                 textInputDecoration.copyWith(hintText: 'product Price'),
+                validator: (val) => val.isEmpty ? 'Price is Required' : null,
                 onChanged: (val) {
                   setState(() => pPrice = val);
                 },
@@ -137,6 +143,7 @@ class _ManageState extends State<Manage> {
               child: TextFormField(
                 decoration:
                 textInputDecoration.copyWith(hintText: 'product Category'),
+                validator: (val) => val.isEmpty ? 'Category is Required' : null,
                 onChanged: (val) {
                   setState(() => pCategory = val);
                 },
@@ -147,6 +154,7 @@ class _ManageState extends State<Manage> {
               child: TextFormField(
                 decoration: textInputDecoration.copyWith(
                     hintText: 'product Discription'),
+                validator: (val) => val.isEmpty ? 'Product Discription is Required' : null,
                 onChanged: (val) {
                   setState(() => pDiscription = val);
                 },
@@ -218,7 +226,7 @@ class _ManageState extends State<Manage> {
       ],
     );
   }
-
+// select images from gallery
   void _selectImage(Future<File> pickImage, int imageNumder) async {
     File tempImg = await pickImage;
     switch(imageNumder){
@@ -231,7 +239,7 @@ class _ManageState extends State<Manage> {
     }
 
   }
-
+// display images in outline buttons
   Widget _displayChild1() {
     if(_image1==null){
       return Padding(
@@ -262,13 +270,15 @@ class _ManageState extends State<Manage> {
       return Image.file(_image3,fit:BoxFit.fill,width: double.infinity,);
     }
   }
-
+// validate and upload images to the firebase like a imageUrl
   void validateAndUpload() async{
     if(_formKey.currentState.validate()){
       if(_image1!=null && _image2!=null && _image3!=null){
         String imageUrl1;
         String imageUrl2;
         String imageUrl3;
+
+        // get snapshot from the storage
         final FirebaseStorage storage = FirebaseStorage.instance;
         final String picture1 = "1${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
         StorageUploadTask task1 = storage.ref().child(picture1).putFile(_image1);
@@ -285,7 +295,12 @@ class _ManageState extends State<Manage> {
          imageUrl2 = await snapshot2.ref.getDownloadURL();
          imageUrl3 = await snapshot3.ref.getDownloadURL();
          List<String> imageList = [imageUrl1,imageUrl2,imageUrl3];
-         _data.updateProductData(pName, pCategory, pQuantity, pPrice, pDiscription, imageList);
+         dynamic result = _data.updateProductData(pName, pCategory, pQuantity, pPrice, pDiscription, imageList);
+         if(result == null) {
+           setState(() {
+             error = 'Please supply comlete details';
+           });
+         }
         });
         _formKey.currentState.reset();
         //Fluttertoast.showToast(msg: 'Product added');

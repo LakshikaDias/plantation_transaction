@@ -1,6 +1,176 @@
 import 'package:flutter/material.dart';
 import 'package:plantationtransaction/screens/view_seller/product_details.dart';
-class Products extends StatefulWidget {
+import 'package:provider/provider.dart';
+import 'package:plantationtransaction/models/product.dart';
+
+
+
+class ProductsHere extends StatefulWidget {
+  @override
+  _ProductsHereState createState() => _ProductsHereState();
+}
+
+class _ProductsHereState extends State<ProductsHere> {
+  @override
+  Widget build(BuildContext context) {
+    final productList = Provider.of<List<Product>>(context);
+    if (productList != null) {
+      productList.forEach((pro){
+        print(pro.pName);
+        //print(pro.pPrice);
+        //print(pro.pQuantity);
+      });
+    }
+    return (productList ==null || productList.isEmpty)? Text('empty'): GridView.builder(
+        itemCount: productList.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2),
+        itemBuilder:(context,index){
+          return Products(product:productList[index]);
+        }
+
+    );
+
+    /*return (productList ==null || productList.isEmpty)? Text('empty'): ListView.builder(
+        itemCount: productList.length,
+        itemBuilder:(context,index){
+          return Products(product:productList[index]);
+        }
+
+    );*/
+  }
+}
+
+
+class Products extends StatelessWidget {
+  final Product product;
+  Products({this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    /*return Card(
+      child: Hero(
+        tag: product.pName,
+        child: Material(
+          child: InkWell(
+            onTap: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>ProductDetails(
+                      product.pName,
+                      product.pPrice,
+                      product.pCategory,
+                      product.pQuantity,
+                      product.pDiscription,
+                      product.imageList) ));
+
+            },
+            child: GridTile(
+              footer: Container(
+                color: Colors.white70,
+                child: ListTile(
+                  leading: Text(product.pName, style: TextStyle(fontWeight: FontWeight.bold),),
+                  title: Text(product.pPrice, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red)),
+                  subtitle: Text(product.pQuantity, style: TextStyle(color: Colors.green),),
+                ),
+              ),
+              child: Image.asset(product.imageList, fit: BoxFit.cover,),
+            ),
+          ),
+        ),
+      ),
+    );*/
+   return Padding(
+     padding: EdgeInsets.only(top:8.0),
+     child: Card(
+       margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+       child: ListTile(
+         leading: CircleAvatar(
+           radius: 25.0,
+           backgroundImage: AssetImage('assets/apple.png'),
+         ),
+         title: Text(product.pName),
+         subtitle: Text(product.pPrice),
+         onTap: (){
+           Navigator.push(context,
+               MaterialPageRoute(builder: (context)=>ProductDetails(
+                   product.pName,
+                   product.pPrice,
+                   product.pCategory,
+                   product.pQuantity,
+                   product.pDiscription,
+                   ) ));
+         },
+
+       ),
+     ),
+   );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
+
+/*class Products extends StatefulWidget {
   @override
   _ProductsState createState() => _ProductsState();
 }
@@ -106,4 +276,7 @@ class SingleProduct extends StatelessWidget {
       ),
     );
   }
-}
+}*/
+
+
+
