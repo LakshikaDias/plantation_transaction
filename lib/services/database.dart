@@ -4,6 +4,7 @@ import 'package:plantationtransaction/models/product.dart';
 import 'package:plantationtransaction/models/user.dart';
 import 'package:uuid/uuid.dart';
 import'package:firebase_auth/firebase_auth.dart';
+import 'package:plantationtransaction/screens/seller_pro/seller_pro_manage.dart';
 
 
 import 'package:flutter/cupertino.dart';
@@ -52,7 +53,7 @@ class DatabaseService {
 
 
 // send data to product collection
-  Future updateProductData(String pName,String pCategory, String pQuantity, String pPrice, String pDiscription, List imageList)async{
+  Future updateProductData(String pName,String pCategory, String pQuantity, String pPrice, String pDiscription, String image)async{
     Future getCurrentUser() async {
       final FirebaseAuth _auth = FirebaseAuth.instance;
       final FirebaseUser user = await _auth.currentUser();
@@ -71,7 +72,7 @@ class DatabaseService {
       'productPrice':pPrice,
       'pDiscription': pDiscription,
       'seller id':userid,
-      'images': imageList,
+      'images': image,
 
     });
 
@@ -89,12 +90,14 @@ List<Product>_productListFromSnapshot(QuerySnapshot snapshot){
       pQuantity: doc.data['productQuantity'] ?? 'Quantity',
       pDiscription: doc.data['pDiscription'] ?? 'Discription',
       pCategory: doc.data['productCategory'] ?? 'Category',
-      //imageList: doc.data['images'] ?? 'Images',
+      imageList: doc.data['images'] ?? 'Images',
 
 
     );
   }).toList();
 }
+
+
 //33333333333333333333333333333333333333333333333333
 
   // get product Stream

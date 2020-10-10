@@ -17,7 +17,7 @@ class _ProductsHereState extends State<ProductsHere> {
     if (productList != null) {
       productList.forEach((pro){
         print(pro.pName);
-        //print(pro.pPrice);
+        print(pro.imageList);
         //print(pro.pQuantity);
       });
     }
@@ -86,11 +86,18 @@ class Products extends StatelessWidget {
        child: ListTile(
          leading: CircleAvatar(
            radius: 25.0,
-           backgroundImage: AssetImage('assets/apple.png'),
+           //backgroundImage: AssetImage('assets/apple.png'),
+           backgroundImage: product?.imageList!=null
+           ?NetworkImage(product.imageList)
+           :null,
+          child: product?.imageList==null
+           ?Icon(Icons.person)
+           :null,
          ),
          title: Text(product.pName),
          subtitle: Text(product.pPrice),
          onTap: (){
+           print(product.imageList);
            Navigator.push(context,
                MaterialPageRoute(builder: (context)=>ProductDetails(
                    product.pName,
@@ -98,6 +105,7 @@ class Products extends StatelessWidget {
                    product.pCategory,
                    product.pQuantity,
                    product.pDiscription,
+                   product.imageList,
                    ) ));
          },
 

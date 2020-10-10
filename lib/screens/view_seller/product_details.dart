@@ -8,12 +8,13 @@ import 'package:plantationtransaction/services/database.dart';
 
 class ProductDetails extends StatelessWidget {
   final productName;
-  final produtPrice;
+  final productPrice;
   final productCate;
   final productQuantity;
   final productDis;
+  final productImg;
   //final productImageList;
-  ProductDetails(this.productName,this.produtPrice,this.productCate,this.productQuantity,this.productDis);
+  ProductDetails(this.productName,this.productPrice,this.productCate,this.productQuantity,this.productDis,this.productImg);
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Product>>.value(
@@ -52,7 +53,9 @@ class ProductDetails extends StatelessWidget {
                 child: GridTile(
                   child: Container(
                     color: Colors.white,
-                    child: Image.asset('assets/apple.png'),
+                    //child: Image.asset('assets/apple.png'),
+                    //child:Image NetworkImage(productImg),
+                    child: Image.network(productImg),
                   ),
                   footer: Container(
                     color: Colors.white70,
@@ -62,7 +65,7 @@ class ProductDetails extends StatelessWidget {
                       title: Row(
                         children: <Widget>[
                           Expanded(
-                            child: Text('\$${produtPrice}',
+                            child: Text('\$${productPrice}',
                               style: TextStyle(color: Colors.red),),
                           ),
                           Expanded(
@@ -126,7 +129,7 @@ class ProductDetails extends StatelessWidget {
               ),
               Divider(),
               Text(productName),
-              Text(produtPrice),
+              Text(productPrice),
               Text(productCate),
               Text(productQuantity),
             ],

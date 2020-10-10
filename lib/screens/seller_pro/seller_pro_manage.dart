@@ -17,6 +17,247 @@ class _ManageState extends State<Manage> {
   final DatabaseService _data = DatabaseService();
   final _formKey = GlobalKey<FormState>();
   File _image1;
+
+  String pName ='';
+  String pCategory ='';
+  String pQuantity ='';
+  String pPrice ='';
+  String pDiscription = '';
+  String image='';
+
+
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    return ListView(
+      children: <Widget>[
+        // get the product image................................................
+        Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+              'Add new product',
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold),
+            )),
+
+
+        Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: OutlineButton(
+                            borderSide: BorderSide(color: Colors.grey.withOpacity(0.5), width:2.5 ),
+                            onPressed: (){
+                              // take1 images from gallery
+                              _selectImage(ImagePicker.pickImage(source: ImageSource.gallery));
+                            },
+                            child: _displayChild1()
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+        // add product details..................................................
+        Column(
+          children: <Widget>[
+
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextFormField(
+                decoration:
+                textInputDecoration.copyWith(hintText: 'product Name'),
+
+                validator: (val) => val.isEmpty ? 'Name is Required' : null,
+                onChanged: (val) {
+                  setState(() => pName = val);
+                },
+
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextFormField(
+                decoration:
+                textInputDecoration.copyWith(hintText: 'product Quantity'),
+                validator: (val) => val.isEmpty ? 'Quantity is Required' : null,
+                onChanged: (val) {
+                  setState(() => pQuantity = val);
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextFormField(
+                decoration:
+                textInputDecoration.copyWith(hintText: 'product Price'),
+                validator: (val) => val.isEmpty ? 'Price is Required' : null,
+                onChanged: (val) {
+                  setState(() => pPrice = val);
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextFormField(
+                decoration:
+                textInputDecoration.copyWith(hintText: 'product Category'),
+                validator: (val) => val.isEmpty ? 'Category is Required' : null,
+                onChanged: (val) {
+                  setState(() => pCategory = val);
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextFormField(
+                decoration: textInputDecoration.copyWith(
+                    hintText: 'product Discription'),
+                validator: (val) => val.isEmpty ? 'Product Discription is Required' : null,
+                onChanged: (val) {
+                  setState(() => pDiscription = val);
+                },
+              ),
+            ),
+          ],
+        ),
+        //add and cancel buttons................................................
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: FlatButton(
+                  onPressed: () async{
+                    validateAndUpload();
+                  },
+                  child: Text(
+                    'Add',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  color: Colors.green,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: FlatButton(
+                  onPressed: (){},
+                  child: Text(
+                    'Update',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  color: Colors.yellow,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: FlatButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+// select images from gallery
+  void _selectImage(Future<File> pickImage) async {
+    File tempImg = await pickImage;
+    setState(()=>_image1 = tempImg);
+
+  }
+// display images in outline buttons
+  Widget _displayChild1() {
+    if(_image1==null){
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(14, 50, 14, 50),
+        child: Icon(Icons.add,color: Colors.grey,),
+      );
+    }else{
+      return Image.file(_image1, fit:BoxFit.fill,width: double.infinity,);
+    }
+  }
+// validate and upload images to the firebase like a imageUrl
+  void validateAndUpload() async{
+    if(_formKey.currentState.validate()){
+      if(_image1!=null ) {
+        String imageUrl1;
+
+        // get snapshot from the storage
+        final FirebaseStorage storage = FirebaseStorage.instance;
+        final String picture1 = "1${DateTime
+            .now()
+            .millisecondsSinceEpoch
+            .toString()}.jpg";
+        StorageUploadTask task1 = storage.ref().child(picture1).putFile(
+            _image1);
+        StorageTaskSnapshot snapshot1 = await task1.onComplete.then((
+            snapshot) => snapshot);
+
+        // get imageUrl from snapshot
+        task1.onComplete.then((snapshot3) async {
+          imageUrl1 = await snapshot1.ref.getDownloadURL();
+          String image = imageUrl1;
+          dynamic result = _data.updateProductData(
+              pName, pCategory, pQuantity, pPrice, pDiscription, image);
+          if (result == null) {
+            setState(() {
+              error = 'Please supply comlete details';
+            });
+          } else {
+            print(image);
+          }
+        });
+        _formKey.currentState.reset();
+      }
+    }
+  }
+}
+
+// third comment========================================================================================================
+/*class Manage extends StatefulWidget {
+
+  @override
+  _ManageState createState() => _ManageState();
+}
+
+class _ManageState extends State<Manage> {
+  String error = '';
+  final DatabaseService _data = DatabaseService();
+  final _formKey = GlobalKey<FormState>();
+  File _image1;
   File _image2;
   File _image3;
 
@@ -300,6 +541,8 @@ class _ManageState extends State<Manage> {
            setState(() {
              error = 'Please supply comlete details';
            });
+         }else{
+           print(imageList);
          }
         });
         _formKey.currentState.reset();
@@ -309,7 +552,7 @@ class _ManageState extends State<Manage> {
       }*/
     }
   }
-}
+}*/
 
 
 
