@@ -6,13 +6,15 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class Manage extends StatefulWidget {
+// in this case only add the product to the data base
+
+class AddProduct extends StatefulWidget {
 
   @override
-  _ManageState createState() => _ManageState();
+  _AddProductState createState() => _AddProductState();
 }
 
-class _ManageState extends State<Manage> {
+class _AddProductState extends State<AddProduct> {
   String error = '';
   final DatabaseService _data = DatabaseService();
   final _formKey = GlobalKey<FormState>();
@@ -155,7 +157,7 @@ class _ManageState extends State<Manage> {
                 ),
               ),
             ),
-            Expanded(
+            /*Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: FlatButton(
@@ -186,7 +188,7 @@ class _ManageState extends State<Manage> {
                   color: Colors.red,
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       ],

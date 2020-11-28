@@ -4,7 +4,92 @@ import 'package:plantationtransaction/models/product.dart';
 import 'package:plantationtransaction/screens/view_seller/products.dart';
 import 'package:provider/provider.dart';
 
+// Add personal product list to the seller's profile
 
+// get the product list
+class ProductSeeManage extends StatefulWidget {
+  @override
+  _ProductSeeManageState createState() => _ProductSeeManageState();
+}
+
+class _ProductSeeManageState extends State<ProductSeeManage> {
+  @override
+  Widget build(BuildContext context) {
+    final PersonalProductList = Provider.of<List<Product>>(context);
+    if(PersonalProductList != null){
+      PersonalProductList.forEach((pro){
+        print(pro.pName);
+      });
+    }
+    return(PersonalProductList == null ||PersonalProductList.isEmpty)? Text('Product List is Emty'):ListView.builder(
+        itemCount: PersonalProductList.length,
+        itemBuilder: (context,index){
+          return PersonalProduct(produ:PersonalProductList[index]);
+        }
+    );
+  }
+}
+
+
+// UI code for product list
+class PersonalProduct extends StatelessWidget {
+  //first product from model
+  final Product produ;
+  PersonalProduct({this.produ});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top:8.0),
+      child: Card(
+        margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+        child: ListTile(
+          leading: CircleAvatar(
+            radius: 25.0,
+            //backgroundImage: AssetImage('assets/apple.png'),
+            backgroundImage: produ?.imageList!=null
+                ?NetworkImage(produ.imageList)
+                :null,
+            child: produ?.imageList==null
+                ?Icon(Icons.person)
+                :null,
+          ),
+          title: Text(produ.pName),
+          trailing: FlatButton(
+            //to go seller's product list
+            onPressed: () {},
+            color: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Text('Delete', style: TextStyle(color: Colors.white),),
+          ),
+        ),
+
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//============================================================================
 //for to doooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 /*class RemoveUpdateProducts extends StatefulWidget {
   @override
@@ -153,7 +238,8 @@ class SingleProduct extends StatelessWidget {
 }*/
 
 //=================================================================================================================
- class SellerProducts extends StatefulWidget {
+// last one
+/*class SellerProducts extends StatefulWidget {
    @override
    _SellerProductsState createState() => _SellerProductsState();
  }
@@ -280,4 +366,4 @@ class SingleProduct extends StatelessWidget {
       ),
     );
   }
-}
+}*/

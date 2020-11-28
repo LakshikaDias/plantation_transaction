@@ -6,6 +6,7 @@ import 'package:plantationtransaction/screens/view_seller/products.dart';
 import 'package:provider/provider.dart';
 import 'package:plantationtransaction/services/database.dart';
 
+// start to create each product details UI
 class ProductDetails extends StatelessWidget {
   final productName;
   final productPrice;

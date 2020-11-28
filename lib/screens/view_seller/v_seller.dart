@@ -10,7 +10,8 @@ import 'package:plantationtransaction/services/auth.dart';
 import 'package:plantationtransaction/services/database.dart';
 import 'package:provider/provider.dart';
 
-
+//start to creat sellers product list
+//create app nar of product list UI
 class SellerView extends StatelessWidget {
   final String SellerId;
   final String SellerName;
@@ -37,6 +38,8 @@ class SellerView extends StatelessWidget {
             ),
           ],
         ),
+        //End app bar of product list UI
+          // go to body of product list UI
         body:Container(
           child: ProductsHere(),
         )

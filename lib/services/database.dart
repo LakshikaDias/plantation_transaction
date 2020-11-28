@@ -4,7 +4,7 @@ import 'package:plantationtransaction/models/product.dart';
 import 'package:plantationtransaction/models/user.dart';
 import 'package:uuid/uuid.dart';
 import'package:firebase_auth/firebase_auth.dart';
-import 'package:plantationtransaction/screens/seller_pro/seller_pro_manage.dart';
+import 'package:plantationtransaction/screens/seller_pro/seller_pro_add_product.dart';
 
 
 import 'package:flutter/cupertino.dart';
@@ -79,6 +79,7 @@ class DatabaseService {
   }
   //2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
   //3333333333333333333333333333333333333333333333333
+  // get product Stream
 Stream<List<Product>> products(String sid){
     return productCollection.where('seller id', isEqualTo: sid).snapshots().map(_productListFromSnapshot);
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plantationtransaction/screens/home/shop_here.dart';
 import 'package:plantationtransaction/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:plantationtransaction/models/seller.dart';
@@ -38,7 +37,8 @@ class _HomeState extends State<Home> {
       );
     }
 
-
+     //use provider to get seller list
+    // start app bar of home page
     return StreamProvider<List<User>>.value(
       value: DatabaseService().sellers,
       child: SafeArea(
@@ -75,7 +75,10 @@ class _HomeState extends State<Home> {
 
 
           ),
-          // Start of the Drawer==================================================
+
+          // end home page app bar
+          // Start home page Drawer
+
           drawer: Drawer(
             child: ListView(
               children: <Widget>[
@@ -84,7 +87,7 @@ class _HomeState extends State<Home> {
                   accountName:Text('User name') ,
                   accountEmail:Text('User email') ,
                   currentAccountPicture: GestureDetector(
-                    //============== goto seller profile==========================
+                    //goto seller profile
                     child: InkWell(
                       onTap: () async{
                         await _auth.authorizeAccess(context);
@@ -98,7 +101,9 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                // ===================++++body of the drawer======================
+
+                // body of the drawer
+
                 InkWell(
                   onTap: (){
                     Navigator.push(context,
@@ -125,8 +130,10 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
+
           // End of the Drawer
-          // Body of the UI=======================================================
+          // Body of the home page
+
           body: ShopsHere(),
         ),
       ),

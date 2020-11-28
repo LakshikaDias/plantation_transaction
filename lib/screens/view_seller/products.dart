@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:plantationtransaction/models/product.dart';
 
 
-
+//get product list from database
 class ProductsHere extends StatefulWidget {
   @override
   _ProductsHereState createState() => _ProductsHereState();
@@ -41,8 +41,9 @@ class _ProductsHereState extends State<ProductsHere> {
   }
 }
 
-
+//start body of product list UI
 class Products extends StatelessWidget {
+  //first product from model
   final Product product;
   Products({this.product});
 
@@ -81,6 +82,7 @@ class Products extends StatelessWidget {
     );*/
    return Padding(
      padding: EdgeInsets.only(top:8.0),
+
      child: Card(
        margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
        child: ListTile(
@@ -96,6 +98,7 @@ class Products extends StatelessWidget {
          ),
          title: Text(product.pName),
          subtitle: Text(product.pPrice),
+         //set product details to product details UI
          onTap: (){
            print(product.imageList);
            Navigator.push(context,
