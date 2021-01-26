@@ -95,7 +95,7 @@ class AuthService {
             if(docs.documents[0].exists){
               if(docs.documents[0].data['category']=='seller'){
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => SellerProfile()));
+                  builder: (BuildContext context) => SellerProfile(user.uid,docs.documents[0].data['name'])));
               }if(docs.documents[0].data['category']=='customer'){
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) => CustomerProfile()));

@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:plantationtransaction/models/seller.dart';
 import 'package:plantationtransaction/models/user.dart';
 import 'package:plantationtransaction/screens/view_seller/v_seller.dart';
+import 'package:provider/provider.dart';
 
+//start body of home page
+//get seller list from database
 
+class ShopsHere extends StatefulWidget {
+  @override
+  _ShopsHereState createState() => _ShopsHereState();
+}
+class _ShopsHereState extends State<ShopsHere> {
+  @override
+  Widget build(BuildContext context) {
+    final sellersDetails = Provider.of<List<User>>(context);
+    if (sellersDetails != null) {
+      sellersDetails.forEach((seller){
+        print(seller.name);
+      });
+    }
+    return (sellersDetails ==null || sellersDetails.isEmpty)? Text('There are no sellers yet'): ListView.builder(
+        itemCount: sellersDetails.length,
+        itemBuilder:(context,index){
+          return SellerTile(seller: sellersDetails[index],);
+        }
+    );
+  }
+}
+// start to create  seller list
 class SellerTile extends StatelessWidget {
   final User seller;
   SellerTile({this.seller});
@@ -21,9 +45,10 @@ class SellerTile extends StatelessWidget {
           title: Text(seller.name),
           subtitle: Text(seller.address),
           trailing: FlatButton(
+            //to go seller's product list
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context)=>SellerView() ));
+                  MaterialPageRoute(builder: (context)=>SellerView(seller.uid,seller.name) ));
             },
             color: Colors.blue,
             shape: RoundedRectangleBorder(
@@ -37,6 +62,110 @@ class SellerTile extends StatelessWidget {
     );
   }
 }
+//end of seller list
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//==========================================================================================================================
+//==========================================================================================================================
+//==========================================================================================================================
+//==========================================================================================================================
+
+
+/*class ShopsHere extends StatefulWidget {
+
+  @override
+  _ShopsHereState createState() => _ShopsHereState();
+}
+
+class _ShopsHereState extends State<ShopsHere> {
+
+  @override
+  Widget build(BuildContext context) {
+
+    final sellers = Provider.of<List<Seller>>(context);
+    if (sellers != null) {
+      sellers.forEach((seller){
+        print(seller.name);
+        print(seller.address);
+      });
+    }
+    return (sellers ==null || sellers.isEmpty)? Text('empty'): ListView.builder(
+        itemCount: sellers.length,
+        itemBuilder:(context,index){
+          return SellerTile(seller:sellers[index]);
+        }
+
+    );
+  }
+}*/
 
 
 
