@@ -48,7 +48,7 @@ class SellerTile extends StatelessWidget {
             //to go seller's product list
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context)=>SellerView(seller.uid,seller.name) ));
+                  MaterialPageRoute(builder: (context)=>SellerView(seller.uid,seller.name, seller.phoneNo)));
             },
             color: Colors.blue,
             shape: RoundedRectangleBorder(
@@ -57,7 +57,6 @@ class SellerTile extends StatelessWidget {
             child: Text('View', style: TextStyle(color: Colors.white),),
           ),
         ),
-
       ),
     );
   }

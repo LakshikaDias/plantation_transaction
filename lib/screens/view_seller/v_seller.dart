@@ -15,7 +15,8 @@ import 'package:provider/provider.dart';
 class SellerView extends StatelessWidget {
   final String SellerId;
   final String SellerName;
-  SellerView(this.SellerId, this.SellerName);
+  final String SellerTel;
+  SellerView(this.SellerId, this.SellerName, this.SellerTel);
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Product>>.value(
@@ -25,10 +26,11 @@ class SellerView extends StatelessWidget {
           backgroundColor: Colors.blue,
           title: Text(SellerName),
           actions: <Widget>[
-            IconButton(
-              icon:Icon(Icons.search,),
-              onPressed: (){},
-            ),
+            // IconButton(
+            //   icon:Icon(Icons.search,),
+            //   onPressed: (){},
+            // ),
+            Text(SellerTel, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, height: 2.3, color: Colors.red )),
             IconButton(
               icon:Icon(Icons.home),
               onPressed: () {

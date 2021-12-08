@@ -6,15 +6,12 @@ import 'package:uuid/uuid.dart';
 import'package:firebase_auth/firebase_auth.dart';
 import 'package:plantationtransaction/screens/seller_pro/seller_pro_add_product.dart';
 
-
 import 'package:flutter/cupertino.dart';
-
-
-
 class DatabaseService {
 
   final String uid;
-  DatabaseService({ this.uid });
+  final String pid;
+  DatabaseService({ this.uid , this.pid});
 
   // collection reference
   final CollectionReference userCollection = Firestore.instance.collection('users');
@@ -31,7 +28,6 @@ class DatabaseService {
       'category' : category,
       'email' : email,
 
-
     });
   }
 
@@ -46,6 +42,7 @@ class DatabaseService {
       return User(
         name: doc.data['name'] ?? 'shopName',
         address: doc.data['address'] ?? 'address',
+        phoneNo: doc.data['phoneNo'] ?? 'phoneNo',
         uid: doc.data['userid'] ?? 'id',
       );
     }).toList();
@@ -64,8 +61,8 @@ class DatabaseService {
     //var id = Uuid();
     //String productId = id.v1();
     String userid = await getCurrentUser();
-    return await productCollection.document().setData({
-      //'pid':productId,
+    return await productCollection.document(pid).setData({
+      'productId':pid,
       'productName':pName,
       'productCategory':pCategory,
       'productQuantity':pQuantity,
@@ -77,8 +74,7 @@ class DatabaseService {
     });
 
   }
-  //2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
-  //3333333333333333333333333333333333333333333333333
+
   // get product Stream
 Stream<List<Product>> products(String sid){
     return productCollection.where('seller id', isEqualTo: sid).snapshots().map(_productListFromSnapshot);
@@ -86,6 +82,7 @@ Stream<List<Product>> products(String sid){
 List<Product>_productListFromSnapshot(QuerySnapshot snapshot){
   return snapshot.documents.map((doc){
     return Product(
+      pid: doc.documentID,
       pName: doc.data['productName'] ?? 'productName',
       pPrice: doc.data['productPrice'] ?? 'price',
       pQuantity: doc.data['productQuantity'] ?? 'Quantity',
@@ -97,6 +94,8 @@ List<Product>_productListFromSnapshot(QuerySnapshot snapshot){
     );
   }).toList();
 }
+
+
 
 
 //33333333333333333333333333333333333333333333333333
@@ -131,116 +130,3 @@ List<Product>_productListFromSnapshot(QuerySnapshot snapshot){
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//==========================================================================================================================
-//==========================================================================================================================
-//==========================================================================================================================
-//==========================================================================================================================
-/*class DatabaseService {
-
-  final String uid;
-  DatabaseService({ this.uid });
-
-  // collection reference
-  final CollectionReference customerCollection = Firestore.instance.collection('customers');
-  final CollectionReference sellerCollection = Firestore.instance.collection('sellers');
-  //final CollectionReference userCollection = Firestore.instance.collection('users');
-  final  CollectionReference productCollection = Firestore.instance.collection('products');
-
-  // send data to customer collection
- Future updateCustomerData( String name, String address, String phoneNo, String email, String customerNIC) async {
-    return await customerCollection.document(uid).setData({
-      'name': name,
-      'address' : address,
-      'customerId' : uid,
-      'phoneNo' : phoneNo,
-      'NIC': customerNIC,
-      'email' : email,
-
-
-    });
-  }
-
-  // send data to seller collection
-  Future updateSellerData( String name, String address, String phoneNo, String email,  String sellerNIC) async {
-    return await sellerCollection.document(uid).setData({
-      'name': name,
-      'address' : address,
-      'sellerid' : uid,
-      'phoneNo' : phoneNo,
-      'NIC': sellerNIC,
-      'email' : email,
-
-
-    });
-  }
-  /*Future updateUserData( String name, String address, String phoneNo,String category, String email,  String sellerNIC) async {
-    return await userCollection.document(uid).setData({
-      'name': name,
-      'address' : address,
-      'sellerid' : uid,
-      'phoneNo' : phoneNo,
-      'category' : category,
-      'NIC': sellerNIC,
-      'email' : email,
-
-
-    });
-  }*/
-
-
-  //seller list from snapshot
-  List<Seller> _sellerListFromSnapshot(QuerySnapshot snapshot){
-    return snapshot.documents.map((doc){
-      return Seller(
-        name: doc.data['name'] ?? 'shopName',
-        address: doc.data['address'] ?? 'address',
-
-
-      );
-    }).toList();
-  }
-
-  // get seller Stream
-Stream<List<Seller>> get sellers {
-    return sellerCollection.snapshots()
-      .map(_sellerListFromSnapshot);
-
-}
-// send data to product collection
-Future updateProductData(String pName,String pCategory, String pQuantity, String pPrice, String pDiscription)async{
-    var id = Uuid();
-    String productId = id.v1();
-    return await productCollection.document(productId).setData({
-      'pid':productId,
-      'productName':pName,
-      'productCategory':pCategory,
-      'productQuantity':pQuantity,
-      'productPrice':pPrice,
-      'pDiscription': pDiscription,
-      'seller id':uid,
-    });
-}
-
-}*/

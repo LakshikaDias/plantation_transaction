@@ -38,7 +38,7 @@ class _SignInState extends State<SignIn> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 20.0),
-                Text('SignUp',style: TextStyle(color: Colors.blue,fontSize: 30.0,fontWeight: FontWeight.bold),),
+                Text('SignIn',style: TextStyle(color: Colors.blue,fontSize: 30.0,fontWeight: FontWeight.bold),),
                 SizedBox(height: 20.0,),
                 CircleAvatar(
                   radius: 50.0,

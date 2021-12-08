@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:plantationtransaction/models/product.dart';
 import 'package:plantationtransaction/screens/view_seller/products.dart';
 import 'package:provider/provider.dart';
+import 'package:plantationtransaction/services/database.dart';
 
 // Add personal product list to the seller's profile
 
@@ -36,6 +39,9 @@ class PersonalProduct extends StatelessWidget {
   //first product from model
   final Product produ;
   PersonalProduct({this.produ});
+
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -56,7 +62,10 @@ class PersonalProduct extends StatelessWidget {
           title: Text(produ.pName),
           trailing: FlatButton(
             //to go seller's product list
-            onPressed: () {},
+            onPressed: () {
+              deleteProduct(produ);
+              print(produ.pName);
+            },
             color: Colors.red,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
@@ -68,7 +77,59 @@ class PersonalProduct extends StatelessWidget {
       ),
     );
   }
-}
+
+// Delete product from product list
+
+    void deleteProduct(Product product) {
+    DocumentReference documentReference = Firestore.instance.collection('products').document(product.pid);
+    documentReference.delete().whenComplete((){
+      print(product.pid);
+    });
+  }
+
+
+  /*void deleteProduct() {
+    DocumentReference documentReference = Firestore.instance.collection('products').document(pid);
+    documentReference.delete().whenComplete((){
+      print(produ.pName);
+    });
+  }*/
+  }
+
+ /*deleteProduct(Product product, Function productDeleted) async {
+  if(product.imageList !=null){
+    StorageReference storageReference =
+    await FirebaseStorage.instance.getReferenceFromUrl(product.imageList);
+    print(storageReference.path);
+    await storageReference.delete();
+    print('image deleted');
+  }
+  await Firestore.instance.collection('products').document(product.pid).delete();
+  productDeleted(product);
+}*/
+
+  //method for delete product to the seller
+
+
+
+
+
+  /*void deleteProduct() async{
+    Firestore.instance.collection('product').document().delete().catchError((e){
+      print(e);
+      });
+    }*/
+
+
+
+ /* void deleteProduct() {
+    DocumentReference documentReference = Firestore.instance.collection('products').documrnt();
+    documentReference.delete().whenComplete((){
+      print(produ.pName);
+    });
+  }*/
+
+
 
 
 

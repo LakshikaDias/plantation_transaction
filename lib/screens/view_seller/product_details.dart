@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:plantationtransaction/models/product.dart';
 import 'package:plantationtransaction/screens/home/home.dart';
-import 'package:plantationtransaction/screens/orders/cart.dart';
-import 'package:plantationtransaction/screens/view_seller/products.dart';
+// import 'package:plantationtransaction/screens/orders/cart.dart';
+// import 'package:plantationtransaction/screens/view_seller/products.dart';
 import 'package:provider/provider.dart';
 import 'package:plantationtransaction/services/database.dart';
 
@@ -25,17 +25,17 @@ class ProductDetails extends StatelessWidget {
           backgroundColor: Colors.blue,
           title: Text(productName),
           actions: <Widget>[
-            IconButton(
-              icon:Icon(Icons.search,),
-              onPressed: (){},
-            ),
-            IconButton(
-              icon:Icon(Icons.shopping_cart),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>Cart() ));
-              },
-            ),
+            // IconButton(
+            //   icon:Icon(Icons.search,),
+            //   onPressed: (){},
+            // ),
+            // IconButton(
+            //   icon:Icon(Icons.shopping_cart),
+            //   onPressed: () {
+            //     Navigator.push(context,
+            //         MaterialPageRoute(builder: (context)=>Cart() ));
+            //   },
+            // ),
             IconButton(
               icon:Icon(Icons.home),
               onPressed: () {
@@ -54,8 +54,6 @@ class ProductDetails extends StatelessWidget {
                 child: GridTile(
                   child: Container(
                     color: Colors.white,
-                    //child: Image.asset('assets/apple.png'),
-                    //child:Image NetworkImage(productImg),
                     child: Image.network(productImg),
                   ),
                   footer: Container(
@@ -66,7 +64,7 @@ class ProductDetails extends StatelessWidget {
                       title: Row(
                         children: <Widget>[
                           Expanded(
-                            child: Text('\$${productPrice}',
+                            child: Text(productPrice,
                               style: TextStyle(color: Colors.red),),
                           ),
                           Expanded(
@@ -79,46 +77,45 @@ class ProductDetails extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: MaterialButton(
-                      onPressed: (){},
-                      color: Colors.white,
-                      textColor: Colors.grey,
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(child: Text('Quantity'),),
-                          Expanded(child: Icon(Icons.arrow_drop_down),),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: MaterialButton(
-                      onPressed: (){},
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      child: Text('Buy Now'),
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: <Widget>[
+              //     Expanded(
+              //       child: MaterialButton(
+              //         onPressed: (){},
+              //         color: Colors.white,
+              //         textColor: Colors.grey,
+              //         child: Row(
+              //           children: <Widget>[
+              //             Expanded(child: Text('Quantity'),),
+              //             Expanded(child: Icon(Icons.arrow_drop_down),),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: MaterialButton(
+              //         onPressed: (){},
+              //         color: Colors.red,
+              //         textColor: Colors.white,
+              //         child: Text('Buy Now'),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Divider(),
               ListTile(
                 title: Text('Product Details', style: TextStyle(fontWeight: FontWeight.bold),),
                 subtitle: Text(productDis),
               ),
-              Row(
-                children: <Widget>[
-                  Padding(padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
-                    child: Text('Seller:', style: TextStyle(color: Colors.grey),),
-                  ),
-                  Padding(padding: EdgeInsets.all(5.0),
-                    child: Text('Seller name'),),
-                ],
-              ),
-              //  want to do=====================================================
+              // Row(
+              //   children: <Widget>[
+              //     Padding(padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
+              //       child: Text('Seller:', style: TextStyle(color: Colors.grey),),
+              //     ),
+              //     Padding(padding: EdgeInsets.all(5.0),
+              //       child: Text('Seller name'),),
+              //   ],
+              // ),
               Row(
                 children: <Widget>[
                   Padding(padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
@@ -129,10 +126,43 @@ class ProductDetails extends StatelessWidget {
                 ],
               ),
               Divider(),
-              Text(productName),
-              Text(productPrice),
-              Text(productCate),
-              Text(productQuantity),
+              Row(
+                children: <Widget>[
+                  Padding(padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
+                    child: Text('Product Name:', style: TextStyle(color: Colors.black),),
+                  ),
+                  Padding(padding: EdgeInsets.all(5.0),
+                    child: Text(productName),),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Padding(padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
+                    child: Text('Product Price:', style: TextStyle(color: Colors.black),),
+                  ),
+                  Padding(padding: EdgeInsets.all(5.0),
+                    child: Text(productPrice),),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Padding(padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
+                    child: Text('Product Category:', style: TextStyle(color: Colors.black),),
+                  ),
+                  Padding(padding: EdgeInsets.all(5.0),
+                    child: Text(productCate),),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Padding(padding: const EdgeInsets.fromLTRB(12.0, 5.0, 5.0, 5.0),
+                    child: Text('Product Quntity:', style: TextStyle(color: Colors.black),),
+                  ),
+                  Padding(padding: EdgeInsets.all(5.0),
+                    child: Text(productQuantity),),
+                ],
+              ),
+              
             ],
           ),
 

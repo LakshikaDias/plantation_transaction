@@ -47,21 +47,21 @@ class _HomeState extends State<Home> {
             title: Text('Plantations'),
             backgroundColor: Colors.blue,
             actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: (){
-                },
-              ),
+              // IconButton(
+              //   icon: Icon(Icons.search),
+              //   onPressed: (){
+              //   },
+              // ),
               IconButton(
                 icon: Icon(Icons.person),
                 onPressed: () async{
                   await _auth.signOut();
                 },
               ),
-              IconButton(
-                onPressed: (){},
-                icon: Icon(Icons.more_vert),
-              ),
+              // IconButton(
+              //   onPressed: (){},
+              //   icon: Icon(Icons.more_vert),
+              // ),
             ],
 
 
@@ -84,8 +84,8 @@ class _HomeState extends State<Home> {
               children: <Widget>[
                 //   header
                 UserAccountsDrawerHeader(
-                  accountName:Text('User name') ,
-                  accountEmail:Text('User email') ,
+                  // accountName:Text('User name') ,
+                  // accountEmail:Text('User email') ,
                   currentAccountPicture: GestureDetector(
                     //goto seller profile
                     child: InkWell(
@@ -120,7 +120,7 @@ class _HomeState extends State<Home> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context)=>Cart() ));
                   },
-                  child: drawerItem('Ordert', Icon(Icons.shopping_basket)),
+                  child: drawerItem('Order', Icon(Icons.shopping_basket)),
                 ),
                 Divider(),
                 InkWell(

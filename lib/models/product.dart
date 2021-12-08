@@ -11,5 +11,6 @@ class Product {
   final String imageList;
 
   Product({this.pName, this.pCategory, this.pQuantity, this.pPrice, this.pDiscription, this.pid, this.imageList});
+
 }
 //==============================================================================
