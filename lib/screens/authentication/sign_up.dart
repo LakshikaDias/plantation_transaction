@@ -180,7 +180,7 @@ class _SignUpState extends State<SignUp> {
                     child: Text('Forgot your password?',style: TextStyle(color: Colors.red[300]),textAlign: TextAlign.right,),
                     onPressed: (){},
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 25.0),
                   RaisedButton(
                       color: Colors.blue,
                       child: Text(

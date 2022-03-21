@@ -1,16 +1,95 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:plantationtransaction/models/product.dart';
 import 'package:plantationtransaction/screens/home/home.dart';
 import 'package:plantationtransaction/screens/orders/cart.dart';
 import 'package:plantationtransaction/screens/seller_pro/seller_pro.dart';
 import 'package:plantationtransaction/screens/view_seller/categories.dart';
 import 'package:plantationtransaction/screens/view_seller/products.dart';
-class SellerView extends StatefulWidget {
+import 'package:plantationtransaction/services/auth.dart';
+import 'package:plantationtransaction/services/database.dart';
+import 'package:provider/provider.dart';
+
+//start to creat sellers product list
+//create app nar of product list UI
+class SellerView extends StatelessWidget {
+  final String SellerId;
+  final String SellerName;
+  final String SellerTel;
+  SellerView(this.SellerId, this.SellerName, this.SellerTel);
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<List<Product>>.value(
+      value: DatabaseService().products(SellerId),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          title: Text(SellerName),
+          actions: <Widget>[
+            // IconButton(
+            //   icon:Icon(Icons.search,),
+            //   onPressed: (){},
+            // ),
+            Text(SellerTel, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, height: 2.3, color: Colors.red )),
+            IconButton(
+              icon:Icon(Icons.home),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context)=>Home() ));
+              },
+            ),
+          ],
+        ),
+        //End app bar of product list UI
+          // go to body of product list UI
+        body:Container(
+          child: ProductsHere(),
+        )
+
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+/*class SellerView extends StatefulWidget {
+  final String SellerId;
+  SellerView(this.SellerId);
   @override
   _SellerViewState createState() => _SellerViewState();
 }
 
 class _SellerViewState extends State<SellerView> {
+  final AuthService _auth = AuthService();
+  @override
+  Widget build(BuildContext context) {
+    //final data = MediaQuery.of(context);
+    return StreamProvider<List<Product>>.value(
+        value: DatabaseService().products(SellerId),
+      child: Scaffold(
+
+      ),
+    );
+  }
+}*/
+
+
+
+
+
+//take under code if you you forget what you did
+//22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
+/*class SellerView extends StatefulWidget {
+  @override
+  _SellerViewState createState() => _SellerViewState();
+}
+
+class _SellerViewState extends State<SellerView> {
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     //final data = MediaQuery.of(context);
@@ -40,67 +119,7 @@ class _SellerViewState extends State<SellerView> {
         ],
       ),
 
-      /*drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            //   header
-            UserAccountsDrawerHeader(
-              accountName:Text('User name') ,
-              accountEmail:Text('User email') ,
-              currentAccountPicture: GestureDetector(
-                //============================================= goto seller profile==========================
-                child: InkWell(
-                  onTap: (){
-                    Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>SellerProfile()));
-                  },
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/customer1.jpg',),
-                  ),
-                ),
-              ),
-            ),
-
-            // =======================================================body of the drawer======================
-            InkWell(
-              onTap: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>Home() ));
-              },
-              child: ListTile(
-                title: Text('Home page'),
-                leading: Icon(Icons.home),
-              ),
-            ),
-            InkWell(
-              onTap: (){},
-              child: ListTile(
-                title: Text('My account'),
-                leading: Icon(Icons.person),
-              ),
-            ),
-            InkWell(
-              onTap: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>Cart() ));
-              },
-              child: ListTile(
-                title: Text('Orders'),
-                leading: Icon(Icons.shopping_basket),
-              ),
-            ),
-            Divider(),
-            InkWell(
-              onTap: (){},
-              child: ListTile(
-                title: Text('Settings'),
-                leading: Icon(Icons.settings),
-              ),
-            ),
-          ],
-        ),
-      ),*/
-      body:ListView(
+      body: ListView(
         children: <Widget>[
           // shop profile image
           Image.asset('assets/shopHere.jpg',),
@@ -128,4 +147,4 @@ class _SellerViewState extends State<SellerView> {
       ),
     );
   }
-}
+}*/
